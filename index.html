@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agenda • Dra. Kaline Ramos</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=1">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-left">
+          <div class="triangles" aria-hidden="true">
+            <span class="t t1"></span><span class="t t2"></span><span class="t t3">
+          </div>
+          <div class="brand-texts">
+            <h1>Dra. Kaline Ramos</h1>
+            <p class="subtitle">Invisalign Doctor • Especialista em Ortodontia Facial • DTM • Odontologia do Sono </p>
+            <p class="subtitle"> <strong>Telefone: 61 99926-9291 • E-mail: kalinesramos@gmail.com</strong></p>
+          </div>
+        </div>
+        <div class="brand-right"></div>
+      </div>
+    </header>
+
+    <nav class="tabs-nav">
+      <button id="tabCadastro" class="tab-btn active" data-tab="patient-register">Cadastro de Pacientes</button>
+      <button id="tabMarcacao" class="tab-btn" data-tab="booking-flow">Agendamento</button>
+      <button id="tabAgenda" class="tab-btn" data-tab="daily-dashboard">Agenda do Dia</button>
+    </nav>
+
+    <section id="patient-register" class="card tab-content">
+      <h2 id="regPanelTitle">Novo Cadastro de Pacientes</h2>
+      <p class="muted">Os dados serão salvos no seu banco de dados Supabase.</p>
+
+      <div class="register-form">
+        <div class="row">
+          <label for="regNome">Nome Completo *</label>
+          <input id="regNome" type="text" placeholder="Nome Completo" />
+        </div>
+        <div class="row">
+          <label for="regCPF">CPF (Apenas números) *</label>
+          <input id="regCPF" type="text" placeholder="11 ou 12 dígitos" maxlength="12" />
+        </div>
+        <div class="row">
+          <label for="regNascimento">Data de Nascimento</label>
+          <input id="regNascimento" type="date" />
+        </div>
+        <div class="row">
+          <label for="regTelefone">Telefone (DDD + Número) *</label>
+          <input id="regTelefone" type="tel" placeholder="5561999999999" />
+        </div>
+        <div class="row">
+          <label for="regEmail">Email</label>
+          <input id="regEmail" type="email" placeholder="email@exemplo.com" />
+        </div>
+
+        <div class="row actions" style="margin-top: 20px;">
+          <button id="btnSavePatient" class="primary">Salvar Paciente</button>
+          <button id="btnClearRegister" class="secondary">Limpar</button>
+          <button id="btnRefreshPatients" class="secondary">Atualizar Lista</button>
+        </div>
+
+        <p id="registerMsg" class="muted"></p>
+      </div>
+
+      <h3 style="margin-top: 30px;">Pacientes Cadastrados</h3>
+      <p class="muted">Use a busca para encontrar rapidamente.</p>
+      <div class="row filter-row">
+        <label for="filterRegInput">Filtrar:</label>
+        <input id="filterRegInput" placeholder="Nome ou CPF" type="text" />
+      </div>
+      <table id="registeredPatientsTable">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Nascimento</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="booking-flow" class="tab-content hidden">
+      <section class="card search-card">
+        <h2>Buscar paciente</h2>
+        <div class="row">
+          <label for="cpfInput">Busca</label>
+          <input id="cpfInput" placeholder="CPF, Nome ou Telefone" maxlength="100" />
+          <button id="btnSearch">Buscar</button>
+        </div>
+        <p id="searchMsg" class="muted"></p>
+
+        <div id="patientSelectionPanel" class="patient-selection-panel hidden">
+          <h3>Selecione o Paciente</h3>
+          <p class="muted" id="selectionCount"></p>
+          <div id="selectionList" class="selection-list"></div>
+        </div>
+
+        <div id="patientPanel" class="patient-panel hidden">
+          <h3>Paciente localizado</h3>
+          <ul class="patient-info">
+            <li><strong>Nome:</strong> <span id="pNome"></span></li>
+            <li><strong>Data de Nascimento:</strong> <span id="pNasc"></span></li>
+            <li><strong>CPF:</strong> <span id="pCPF"></span></li>
+            <li><strong>Telefone:</strong> <span id="pTel"></span></li>
+            <li><strong>Email:</strong> <span id="pEmail"></span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="bookingSection" class="card hidden">
+        <h2>Agendar consulta</h2>
+
+        <div class="booking-grid">
+          <div class="booking-controls">
+            <div class="row">
+              <label>Duração</label>
+              <div id="duration" class="duration-options">
+                <button class="duration-btn" data-minutes="30">30 min</button>
+                <button class="duration-btn" data-minutes="60">1h</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="datePick">Escolha a data</label>
+              <input id="datePick" type="date" />
+            </div>
+
+            <div class="row" style="align-items:flex-start;">
+              <label>Horários disponíveis</label>
+              <div id="times" class="times-grid"></div>
+            </div>
+
+            <input type="hidden" id="remarqueeId" value="" />
+
+            <div class="row" style="align-items:flex-start;">
+              <label for="obsText">Observações</label>
+              <textarea id="obsText" placeholder="Motivo da consulta, notas importantes..." rows="3"></textarea>
+            </div>
+
+            <div class="row actions">
+              <button id="btnSchedule" class="primary" disabled>Agendar</button>
+              <button id="btnClear" class="secondary">Limpar</button>
+            </div>
+
+            <div id="bookingMsg" class="muted"></div>
+          </div>
+
+          <div id="appointmentsCard" class="timeline-preview">
+            <h3>Pré-visualização da Agenda</h3>
+            <div id="timelineBody" class="timeline-body">
+              <p class="muted">Selecione uma data para ver a linha do tempo.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section id="daily-dashboard" class="card tab-content hidden">
+      <h2>Agenda do Dia</h2>
+
+      <div class="row date-picker-row">
+          <label for="dashboardDatePick">Selecione o dia</label>
+          <input id="dashboardDatePick" type="date" />
+          <button id="btnRefreshDashboard" class="primary">Atualizar</button>
+          <button id="btnExportCsv" class="secondary">Exportar CSV</button>
+      </div>
+
+
+      <h3 id="dailyAppointmentsTitle">Selecione uma data.</h3>
+
+      <div class="daily-view-grid">
+        <div class="daily-appointments-list">
+          <table id="dailyAppointmentsTable">
+            <thead>
+              <tr>
+                <th>Horário</th>
+                <th>Paciente</th>
+                <th>Duração</th>
+                <th>Contato</th>
+                <th>Notas</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="daily-timeline-preview">
+          <h3>Linha do Tempo</h3>
+          <div id="dailyTimelineBody" class="timeline-body">
+            <p class="muted">Selecione uma data para ver a linha do tempo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lista de agendamentos - ficará visível apenas quando a aba "Agendamento" estiver ativa -->
+    <section id="appointments-list-section" class="card appointments-card hidden">
+      <h2>Lista Completa de Agendamentos</h2>
+      <p class="muted">Armazenadas localmente (apenas neste navegador).</p>
+
+      <div class="row filter-row">
+        <label for="filterInput">Filtrar:</label>
+        <input id="filterInput" placeholder="Nome, CPF ou Data (AAAA-MM-DD)" type="text" />
+      </div>
+
+      <table id="appointmentsTable">
+        <thead>
+          <tr>
+            <th>Paciente</th>
+            <th>Data</th>
+            <th>Horário</th>
+            <th>Duração</th>
+            <th>Contato</th>
+            <th>Email</th>
+            <th>Observação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <p>Protótipo desenvolvido por Carmel Ramos — Protótipo para gerenciamento simples de agendamentos.</p>
+    </footer>
+  </main>
+
+  <div id="modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <h3>Confirmação de agendamento</h3>
+      <p id="modalText"></p>
+      <div class="modal-actions">
+        <a id="waLink" href="#" target="_blank" class="btn wa">Abrir no WhatsApp</a>
+        <button id="copyBtn" class="btn">Copiar mensagem</button>
+        <button id="closeModal" class="btn secondary">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPORTANTE: adicione "defer" em todos -->
+  <script defer src="supabaseConfig.js"></script>
+  <script defer src="patients.js"></script>
+  <script defer src="appointments.js"></script>
+</body>
+</html>

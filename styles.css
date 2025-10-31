@@ -32,7 +32,7 @@ body {
   color: #212529;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding: 0 5px;
+  padding: 0;
 }
 
 /* Top header com estilo clássico/clínico */
@@ -810,4 +810,40 @@ html {
   -webkit-text-size-adjust: 100%;
   touch-action: manipulation;
   overscroll-behavior: none;
+}
+
+/* 🔹 Correção final para Chrome e iPhone - evitar corte e zoom automático */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* impede rolagem lateral fantasma */
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: 100%;
+}
+
+.container, main, .card {
+  max-width: 100% !important;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 17px; /* melhora leitura */
+    line-height: 1.5;
+  }
+
+  button, input, label, p {
+    font-size: 1rem;
+  }
+
+  .topbar {
+    padding: 15px 10px;
+  }
+
+  .brand-texts h1 {
+    font-size: 24px;
+  }
 }

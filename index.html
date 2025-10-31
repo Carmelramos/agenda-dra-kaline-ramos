@@ -228,7 +228,7 @@
       </table>
     </section>
 
-  <footer class="footer">
+    <footer class="footer">
     <p>© 2025 — Desenvolvido com <span class="heart">💙</span> por <strong>Carmel Ramos</strong>. Todos os direitos reservados.</p>
     <p>Gerenciamento simples e eficiente de agendamentos para consultas.</p>
     <p id="update-info"></p>
@@ -248,6 +248,18 @@
     }
   </script>
 
+  <!-- 🔹 Modal de confirmação -->
+  <div id="modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <h3>Confirmação de agendamento</h3>
+      <p id="modalText"></p>
+      <div class="modal-actions">
+        <a id="waLink" href="#" target="_blank" class="btn wa">Abrir no WhatsApp</a>
+        <button id="copyBtn" class="btn">Copiar mensagem</button>
+        <button id="closeModal" class="btn secondary">Fechar</button>
+      </div>
+    </div>
+  </div>
 
   <!-- IMPORTANTE: adicione "defer" em todos -->
   <script defer src="supabaseConfig.js"></script>

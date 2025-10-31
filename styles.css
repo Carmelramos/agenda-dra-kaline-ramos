@@ -764,3 +764,17 @@ tr:last-child td {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* --- 🔹 Correção: garantir que o modal apareça quando ativo --- */
+.modal {
+  display: flex !important; /* força exibição mesmo se tiver herança do .hidden */
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.modal.hidden {
+  display: none !important; /* só oculta quando realmente estiver com a classe .hidden */
+  visibility: hidden;
+  opacity: 0;
+}
+

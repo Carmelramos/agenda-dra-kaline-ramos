@@ -549,9 +549,7 @@ tr:last-child td {
 }
 
 /* --------------------------------------------------------
-   📱 RESPONSIVIDADE - CELULARES E TABLETS (versão aprimorada)
-   Combina ajustes visuais + comportamento dinâmico dos triângulos
-   Desenvolvido com 💙 por Carmel Ramos (2025)
+   📱 RESPONSIVIDADE - CELULARES E TABLETS (por Carmel)
 ---------------------------------------------------------*/
 
 /* 🔹 iPhone 13 / Galaxy S21 (6.1") */
@@ -574,6 +572,12 @@ tr:last-child td {
 
   .brand-texts .subtitle {
     font-size: 12px;
+  }
+
+  .triangles {
+    transform: rotate(-90deg) scale(0.8);
+    margin-right: 0;
+    margin-top: 8px;
   }
 
   .container {
@@ -621,6 +625,11 @@ tr:last-child td {
     font-size: 24px;
   }
 
+  .triangles {
+    transform: rotate(-90deg) scale(0.9);
+    margin-right: 5px;
+  }
+
   .booking-grid,
   .daily-view-grid {
     grid-template-columns: 1fr;
@@ -643,6 +652,11 @@ tr:last-child td {
 
   .brand-texts .subtitle {
     font-size: 13px;
+  }
+
+  .triangles {
+    transform: rotate(-90deg) scale(1);
+    margin-right: 20px;
   }
 
   .container {
@@ -668,35 +682,38 @@ tr:last-child td {
   }
 }
 
-/* --- 🔹 Triângulos dinâmicos: lateral no desktop / acima no mobile --- */
-@media (max-width: 720px) {
-  .topbar {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .brand {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
+/* --- Ajuste de logo (triângulos acima do nome) para mobile --- */
+@media (max-width: 480px) {
   .brand-left {
-    flex-direction: column;
+    flex-direction: column; /* mantém ordem natural */
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    position: relative;
+    z-index: 2; /* 🔹 garante que o conteúdo fique acima de tudo, mas abaixo do modal */
   }
 
-  /* 🔹 Triângulos agora ficam acima do nome */
+  /* 🔹 Triângulos centralizados acima do nome */
   .triangles {
-    order: -1; /* Sobe acima do texto */
+    order: -1; /* sobe acima do texto */
     transform: rotate(-90deg) scale(0.9);
-    margin: 0 auto 12px auto;
+    margin: 0 auto 10px auto;
     animation: none;
+    position: relative;
+    z-index: 1; /* 🔹 abaixo do modal */
   }
 
-  /* 🔹 Tamanhos ajustados */
+  /* 🔹 Pequena linha azul decorativa entre triângulos e nome */
+  .brand-left::before {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+    border-radius: 1px;
+    margin-bottom: 8px;
+  }
+
+  /* 🔹 Ajuste de tamanho dos triângulos */
   .t.t1 {
     border-width: 0 15px 22px 0;
     transform: translate(-15px, -10px);
@@ -710,7 +727,6 @@ tr:last-child td {
     transform: translate(8px, 8px);
   }
 
-  /* 🔹 Centraliza os textos */
   .brand-texts {
     text-align: center;
   }
@@ -722,15 +738,29 @@ tr:last-child td {
   .brand-texts .subtitle {
     font-size: 12px;
   }
+}
 
-  /* 🔹 Linha decorativa azul suave abaixo dos triângulos */
-  .brand-left::before {
-    content: "";
-    display: block;
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-dark), var(--accent));
-    border-radius: 1px;
-    margin-bottom: 8px;
+/* 💙 Animação suave no coração */
+.heart {
+  display: inline-block;
+  animation: pulseHeart 2.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes pulseHeart {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
   }
 }
+
+/* Fade-in sutil para a linha de atualização */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

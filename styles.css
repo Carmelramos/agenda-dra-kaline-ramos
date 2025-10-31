@@ -638,6 +638,33 @@ tr:last-child td {
   .timeline-body {
     max-height: 350px;
   }
+
+  /* 🔹 Corrige largura total e texto pequeno */
+  html {
+    font-size: 17px; /* texto maior em celulares */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    padding: 0 10px;
+  }
+
+  .container {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  h1, h2, h3, label, p, button {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
 }
 
 /* 🔹 iPad mini / tablets antigos (7.9" até 9.7") */
@@ -661,6 +688,7 @@ tr:last-child td {
 
   .container {
     padding: 0 16px;
+    max-width: 100%;
   }
 
   .booking-grid,
@@ -685,24 +713,22 @@ tr:last-child td {
 /* --- Ajuste de logo (triângulos acima do nome) para mobile --- */
 @media (max-width: 480px) {
   .brand-left {
-    flex-direction: column; /* mantém ordem natural */
+    flex-direction: column;
     align-items: center;
     gap: 8px;
     position: relative;
-    z-index: 2; /* 🔹 garante que o conteúdo fique acima de tudo, mas abaixo do modal */
+    z-index: 2;
   }
 
-  /* 🔹 Triângulos centralizados acima do nome */
   .triangles {
-    order: -1; /* sobe acima do texto */
+    order: -1;
     transform: rotate(-90deg) scale(0.9);
     margin: 0 auto 10px auto;
     animation: none;
     position: relative;
-    z-index: 1; /* 🔹 abaixo do modal */
+    z-index: 1;
   }
 
-  /* 🔹 Pequena linha azul decorativa entre triângulos e nome */
   .brand-left::before {
     content: "";
     display: block;
@@ -713,7 +739,6 @@ tr:last-child td {
     margin-bottom: 8px;
   }
 
-  /* 🔹 Ajuste de tamanho dos triângulos */
   .t.t1 {
     border-width: 0 15px 22px 0;
     transform: translate(-15px, -10px);
@@ -766,15 +791,23 @@ tr:last-child td {
 
 /* --- 🔹 Correção: garantir que o modal apareça quando ativo --- */
 .modal {
-  display: flex !important; /* força exibição mesmo se tiver herança do .hidden */
+  display: flex !important;
   visibility: visible;
   opacity: 1;
   transition: opacity 0.25s ease-in-out;
+  z-index: 1000; /* garante que fique acima de tudo */
 }
 
 .modal.hidden {
-  display: none !important; /* só oculta quando realmente estiver com a classe .hidden */
+  display: none !important;
   visibility: hidden;
   opacity: 0;
 }
 
+/* 🔹 Ajuste geral de fonte e zoom base */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}

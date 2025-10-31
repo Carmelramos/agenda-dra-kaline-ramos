@@ -6,6 +6,9 @@
   <title>Agenda • Dra. Kaline Ramos</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=1">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0077b6">
+
 </head>
 <body>
   <main class="container">
@@ -265,5 +268,15 @@
   <script defer src="supabaseConfig.js"></script>
   <script defer src="patients.js"></script>
   <script defer src="appointments.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("./serviceWorker.js")
+        .then(() => console.log("✅ Service Worker registrado com sucesso!"))
+        .catch(err => console.log("❌ Erro ao registrar Service Worker:", err));
+      }
+  </script>
+
 </body>
 </html>
